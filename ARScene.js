@@ -35,55 +35,69 @@ var ul = document.getElementById("menuList");
 var ov = document.createElement("div");
 ov.classList.add("overlay");
 ov.setAttribute = ("id", "overlayID");
-document.body.appendChild(ov);
 
-var left = document.createElement("h1");
+
+var left = document.createElement("button");
 left.textContent = "Move Right";
-left.classList.add("translationRightButton");
+left.classList.add("translationLeftButton");
 left.setAttribute = ("id", "but");
 left.addEventListener("click", translateRight);
 left.innerHTML = "&rarr;";
+//left.innerHTML = "Right";
 ov.appendChild(left);
 
-var right = document.createElement("h1");
-right.classList.add("translationLeftButton");
+var right = document.createElement("button");
+right.classList.add("translationRightButton");
 right.setAttribute = ("id", "but2");
 right.addEventListener("click", translateLeft);
 right.innerHTML = "&larr;";
 ov.appendChild(right);
 
-var zFront = document.createElement("h1");
+var zFront = document.createElement("button");
 zFront.classList.add("translationFrontButton");
 zFront.setAttribute = ("id", "zFront");
 zFront.addEventListener("click", translateFront);
-zFront.innerHTML = "&uarr;";
+zFront.innerHTML = "Front";
 ov.appendChild(zFront);
 
-var zBack = document.createElement("h1");
-zBack.classList.add("translationBottomButton");
+var zBack = document.createElement("button");
+zBack.classList.add("translationBackButton");
 zBack.setAttribute = ("id", "zBack");
 zBack.addEventListener("click", translateBack);
-zBack.innerHTML = "&darr;";
+zBack.innerHTML = "Back";
 ov.appendChild(zBack);
 
 var yUp = document.createElement("button");
 yUp.classList.add("translationYUP");
 yUp.setAttribute = ("id", "yUP");
 yUp.addEventListener("click", translateYUP);
-yUp.innerHTML = "Up";
+yUp.innerHTML = "&uarr;";
 ov.appendChild(yUp);
 
 var yDown = document.createElement("button");
 yDown.classList.add("translationYDown");
 yDown.setAttribute = ("id", "yDown");
 yDown.addEventListener("click", translateYDown);
-yDown.innerHTML = "Down";
+yDown.innerHTML = "&darr;";
 ov.appendChild(yDown);
+
+var rotMesh = document.createElement("button");
+rotMesh.classList.add("rotateButton");
+rotMesh.setAttribute = ("id", "rotate");
+rotMesh.addEventListener("click", rotateMesh);
+rotMesh.innerHTML = "Rotate 360'";
+ov.appendChild(rotMesh);
+
+document.body.appendChild(ov);
 
 var canvas = document.getElementById("renderCanvas");
 var xPos = 0,
   yPos = 0,
   zPos = 0;
+
+var xRot = 0,
+  yRot = 0,
+  zRot = 0;
 
 var modelsInResturant = [];
 var selectedResturant;
@@ -153,13 +167,12 @@ var createScene = function () {
     function (meshes) {
       let xQuat = new BABYLON.Quaternion();
       BABYLON.Quaternion.FromEulerAnglesToRef(Math.PI / 2, 0, 0, xQuat);
-      var j = 0;
       for (mesh of meshes) {
         if (mesh.name !== "__root__") {
           mesh.setParent(webarStage);
+          //mesh.position.set(0,0,0);
           mesh.rotationQuaternion.multiplyInPlace(xQuat);
           scaleByFactor(mesh, 0.375);
-          j++;
         }
       }
     }
@@ -177,7 +190,6 @@ var createScene = function () {
   ul.addEventListener("click", function (e) {
     if (e.target && e.target.nodeName == "LI") {
       renderSelectedModel(e.target.id);
-      console.log(e.target.id + " was clicked");
     }
   });
 
@@ -206,12 +218,20 @@ window.initFunction = async function () {
 };
 
 function renderSelectedModel(val) {
+  xPos = 0;
+  yPos = 0;
+  zPos = 0;
+
+  xRot = 0;
+  yRot = 0;
+  zRot = 0;
+
   for (var i = 0; i < data[currentMesh].Meshes.length; i++) {
     //scene.removeMesh( mesh name );
     scene.getMeshByName(data[currentMesh].Meshes[i]).dispose();
   }
+
   currentMesh = val;
-  console.log(val);
   BABYLON.SceneLoader.ImportMesh(
     data[val].Meshes,
     data[val].path,
@@ -219,13 +239,15 @@ function renderSelectedModel(val) {
     scene,
     function (meshes) {
       let xQuat = new BABYLON.Quaternion();
-      BABYLON.Quaternion.FromEulerAnglesToRef(Math.PI / 2, 0, 0, xQuat);
+      BABYLON.Quaternion.FromEulerAnglesToRef(Math.PI / data[val].rotX, data[val].rotY, data[val].rotZ, xQuat);
 
       for (mesh of meshes) {
         if (mesh.name !== "__root__") {
           mesh.setParent(webarStage);
           mesh.rotationQuaternion.multiplyInPlace(xQuat);
-          scaleByFactor(mesh, 0.375);
+          mesh.position.z = data[val].posZ;
+          mesh.position.y = data[val].posY;
+          scaleByFactor(mesh, 0.0375);
         }
       }
     }
@@ -271,6 +293,14 @@ function translateYDown() {
   yPos = yPos - 0.1;
   for (var i = 0; i < data[currentMesh].Meshes.length; i++) {
     scene.getMeshByName(data[currentMesh].Meshes[i]).position.y = yPos;
+  }
+}
+
+function rotateMesh() {
+  xRot = xRot + 0.1;
+  for (var i = 0; i < data[currentMesh].Meshes.length; i++) {
+    console.log(scene.getMeshByName(data[currentMesh].Meshes[i]));
+    scene.getMeshByName(data[currentMesh].Meshes[i]).rotation.x = xRot;
   }
 }
 
