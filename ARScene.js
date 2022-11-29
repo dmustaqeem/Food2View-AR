@@ -1,18 +1,10 @@
-var canvas = document.getElementById("renderCanvas");
-var xPos = 0,
-  yPos = 0,
-  zPos = 0;
+const theme3 = `
 
-const theme = `
-        <div id = 'introCard' class="card card-1">
-            <h2 class="card__title">Search the Sprites</h2>
-        </div>
 			`;
 
-let htmlContent = "";
-htmlContent += theme;
-var d = document.getElementById("Card");
-d.insertAdjacentHTML("beforeend", htmlContent);
+let htmlContent3 = "";
+htmlContent3 += theme3;
+document.body.insertAdjacentHTML("beforeend", htmlContent3);
 
 const theme2 = `
   <input type="checkbox" id="ham-menu">
@@ -37,20 +29,6 @@ const theme2 = `
 let htmlContent2 = "";
 htmlContent2 += theme2;
 document.body.insertAdjacentHTML("beforeend", htmlContent2);
-
-const theme3 = `
-<div class="card">
-<div id="Resturant_Name"></div>
-<div class="container">
-  <h4><b>John Doe</b></h4>
-  <p>Architect & Engineer</p>
-</div>
-</div>
-			`;
-
-let htmlContent3 = "";
-htmlContent3 += theme3;
-document.body.insertAdjacentHTML("beforeend", htmlContent3);
 
 var ul = document.getElementById("menuList");
 
@@ -102,6 +80,15 @@ yDown.addEventListener("click", translateYDown);
 yDown.innerHTML = "Down";
 ov.appendChild(yDown);
 
+var canvas = document.getElementById("renderCanvas");
+var xPos = 0,
+  yPos = 0,
+  zPos = 0;
+
+var modelsInResturant = [];
+var selectedResturant;
+var currentMesh;
+
 var engine = null;
 var sceneToRender = null;
 var webarStage = null;
@@ -141,154 +128,62 @@ var createScene = function () {
   webarStage = new BABYLON.Mesh("webarStage", scene);
 
   //=======================================================
+
+  //Selected Resturant and Meal
   const div = document.getElementById("test-div");
+  //Spliting the String to get Meal and Resturant
   const myArray = div.dataset.test.split("+");
 
-  var keySet = [];
-  var modelsInResturant = [];
-  var selectedResturant;
-  var currentMesh;
-
+  //To Compare with coresponding Model in JSON
   for (var key of Object.keys(data)) {
     if (data[key].resturant == myArray[1]) {
       selectedResturant = data[key].resturant;
       modelsInResturant.push(data[key]);
       if (key == myArray[0]) {
-        if (data[key].ModelName == "Platter") {
-          BABYLON.SceneLoader.ImportMesh(
-            ["Object_2", "Object_3", "Object_4"],
-            "./models/",
-            "Platter.glb",
-            scene,
-            function (meshes, particleSystems, skeletons) {
-              let xQuat = new BABYLON.Quaternion();
-              BABYLON.Quaternion.FromEulerAnglesToRef(Math.PI / 2, 0, 0, xQuat);
-              var mID = 1;
-              for (mesh of meshes) {
-                if (mesh.name !== "__root__") {
-                  // Move the loaded models to webarStage
-                  mesh.numberID = 3;
-                  mesh.name = mID;
-                  currentMesh = "platter";
-                  mesh.setParent(webarStage);
-                  mesh.rotationQuaternion.multiplyInPlace(xQuat);
-                  scaleByFactor(mesh, 0.375);
-                  mID++;
-                }
-              }
-            }
-          );
-        }
-
-        if (data[key].ModelName == "burger") {
-          BABYLON.SceneLoader.ImportMesh(
-            ["mainMeshNode_Material_0_0"],
-            "./models/",
-            "burger.glb",
-            scene,
-            function (meshes, particleSystems, skeletons) {
-              let xQuat = new BABYLON.Quaternion();
-              BABYLON.Quaternion.FromEulerAnglesToRef(Math.PI / 2, 0, 0, xQuat);
-              var mID = 1;
-              for (mesh of meshes) {
-                if (mesh.name !== "__root__") {
-                  // Move the loaded models to webarStage
-                  currentMesh = "burger";
-                  mesh.setParent(webarStage);
-                  mesh.rotationQuaternion.multiplyInPlace(xQuat);
-                  scaleByFactor(mesh, 0.0975);
-                  mID++;
-                }
-              }
-            }
-          );
-        }
+        currentMesh = key;
       }
     }
   }
-
-  var i = 0;
-  var m1 = document.createElement("li");
-  m1.innerHTML = modelsInResturant[i].Name;
-  m1.id = modelsInResturant[i].Name;
-  m1.onclick = function () {
-    //Remove Meshes
-    if (currentMesh != "burger") {
-      scene.getMeshById("1").dispose();
-    }
-
-    if (currentMesh != "platter") {
-      scene.getMeshById("1").dispose();
-      scene.getMeshById("2").dispose();
-      scene.getMeshById("3").dispose();
-    }
-
-    BABYLON.SceneLoader.ImportMesh(
-      ["mainMeshNode_Material_0_0"],
-      "./models/",
-      "burger.glb",
-      scene,
-      function (meshes, particleSystems, skeletons) {
-        let xQuat = new BABYLON.Quaternion();
-        BABYLON.Quaternion.FromEulerAnglesToRef(Math.PI / 2, 0, 0, xQuat);
-        var mID = 1;
-        for (mesh of meshes) {
-          if (mesh.name !== "__root__") {
-            // Move the loaded models to webarStage
-            currentMesh = "burger";
-            mesh.setParent(webarStage);
-            mesh.rotationQuaternion.multiplyInPlace(xQuat);
-            scaleByFactor(mesh, 0.0975);
-            mID++;
-          }
+  //Rendering Model in Scene and Setting up flag variables
+  BABYLON.SceneLoader.ImportMesh(
+    data[currentMesh].Meshes,
+    data[currentMesh].path,
+    data[currentMesh].object,
+    scene,
+    function (meshes) {
+      let xQuat = new BABYLON.Quaternion();
+      BABYLON.Quaternion.FromEulerAnglesToRef(Math.PI / 2, 0, 0, xQuat);
+      var j = 0;
+      for (mesh of meshes) {
+        if (mesh.name !== "__root__") {
+          mesh.setParent(webarStage);
+          mesh.rotationQuaternion.multiplyInPlace(xQuat);
+          scaleByFactor(mesh, 0.375);
+          j++;
         }
       }
-    );
-  };
-  ul.appendChild(m1);
-
-  i = 1;
-  var m2 = document.createElement("li");
-  m2.innerHTML = modelsInResturant[i].Name;
-  m2.id = modelsInResturant[i].Name;
-  m2.onclick = function () {
-    //Remove Meshes
-    if (currentMesh != "burger") {
-      scene.getMeshById("1").dispose();
     }
+  );
 
-    if (currentMesh != "platter") {
-      scene.getMeshById("1").dispose();
-      scene.getMeshById("2").dispose();
-      scene.getMeshById("3").dispose();
+  //==============================================Buttons to Switch Model=====================================
+
+  for (var i = 0; i < modelsInResturant.length; i++) {
+    var m1 = document.createElement("li");
+    m1.innerHTML = modelsInResturant[i].Name;
+    m1.id = modelsInResturant[i].Name;
+    ul.appendChild(m1);
+  }
+
+  ul.addEventListener("click", function (e) {
+    if (e.target && e.target.nodeName == "LI") {
+      renderSelectedModel(e.target.id);
+      console.log(e.target.id + " was clicked");
     }
+  });
 
-    BABYLON.SceneLoader.ImportMesh(
-      ["Object_2", "Object_3", "Object_4"],
-      "./models/",
-      "Platter.glb",
-      scene,
-      function (meshes, particleSystems, skeletons) {
-        let xQuat = new BABYLON.Quaternion();
-        BABYLON.Quaternion.FromEulerAnglesToRef(Math.PI / 2, 0, 0, xQuat);
-        var mID = 1;
-        for (mesh of meshes) {
-          if (mesh.name !== "__root__") {
-            mesh.name = mID;
-            currentMesh = "platter";
-            mesh.setParent(webarStage);
-            mesh.rotationQuaternion.multiplyInPlace(xQuat);
-            scaleByFactor(mesh, 0.375);
-            mID++;
-          }
-        }
-      }
-    );
-  };
-  ul.appendChild(m2);
+  //=====================================================================================
 
-  console.log(document.getElementById("Meal 1"));
-
+  //translateRight()
   WEBARSDK.InitBabylonJs(canvas, scene, camera, webarStage);
   return scene;
 };
@@ -311,102 +206,71 @@ window.initFunction = async function () {
 };
 
 function renderSelectedModel(val) {
+  for (var i = 0; i < data[currentMesh].Meshes.length; i++) {
+    //scene.removeMesh( mesh name );
+    scene.getMeshByName(data[currentMesh].Meshes[i]).dispose();
+  }
+  currentMesh = val;
   console.log(val);
-  // for (var i = 0; i < scene.getMeshById("object").numberID; i++) {
-  //   scene.getMeshById("object").dispose();
-  // }
+  BABYLON.SceneLoader.ImportMesh(
+    data[val].Meshes,
+    data[val].path,
+    data[val].object,
+    scene,
+    function (meshes) {
+      let xQuat = new BABYLON.Quaternion();
+      BABYLON.Quaternion.FromEulerAnglesToRef(Math.PI / 2, 0, 0, xQuat);
 
-  // if (data[key].ModelName == "Platter") {
-  //   BABYLON.SceneLoader.ImportMesh(
-  //     ["Object_2", "Object_3", "Object_4"],
-  //     "./models/",
-  //     "Platter.glb",
-  //     scene,
-  //     function (meshes, particleSystems, skeletons) {
-  //       let xQuat = new BABYLON.Quaternion();
-  //       BABYLON.Quaternion.FromEulerAnglesToRef(Math.PI / 2, 0, 0, xQuat);
-
-  //       for (mesh of meshes) {
-  //         if (mesh.name !== "__root__") {
-  //           mesh.name = "object";
-  //           mesh.setParent(webarStage);
-  //           mesh.rotationQuaternion.multiplyInPlace(xQuat);
-  //           scaleByFactor(mesh, 0.375);
-  //         }
-  //       }
-  //     }
-  //   );
-  // }
-
-  // if (data[key].ModelName == "burger") {
-  //   BABYLON.SceneLoader.ImportMesh(
-  //     ["mainMeshNode_Material_0_0"],
-  //     "./models/",
-  //     "burger.glb",
-  //     scene,
-  //     function (meshes, particleSystems, skeletons) {
-  //       let xQuat = new BABYLON.Quaternion();
-  //       BABYLON.Quaternion.FromEulerAnglesToRef(Math.PI / 2, 0, 0, xQuat);
-
-  //       for (mesh of meshes) {
-  //         if (mesh.name !== "__root__") {
-  //           // Move the loaded models to webarStage
-  //           mesh.name = "object";
-  //           mesh.setParent(webarStage);
-  //           mesh.rotationQuaternion.multiplyInPlace(xQuat);
-  //           scaleByFactor(mesh, 0.0975);
-  //         }
-  //       }
-  //     }
-  //   );
-  // }
+      for (mesh of meshes) {
+        if (mesh.name !== "__root__") {
+          mesh.setParent(webarStage);
+          mesh.rotationQuaternion.multiplyInPlace(xQuat);
+          scaleByFactor(mesh, 0.375);
+        }
+      }
+    }
+  );
 }
 
 function translateRight() {
   xPos = xPos - 0.1;
-
-  for (var i = 0; i < scene.getMeshById("object").numberID; i++) {
-    scene.getMeshByName("object").position.x = xPos;
+  for (var i = 0; i < data[currentMesh].Meshes.length; i++) {
+    scene.getMeshByName(data[currentMesh].Meshes[i]).position.x = xPos;
   }
 }
 
 function translateLeft() {
   xPos = xPos + 0.1;
-
-  for (var i = 0; i < scene.getMeshById("object").numberID; i++) {
-    scene.getMeshByName("object").position.x = xPos;
+  for (var i = 0; i < data[currentMesh].Meshes.length; i++) {
+    scene.getMeshByName(data[currentMesh].Meshes[i]).position.x = xPos;
   }
 }
 
 function translateFront() {
   zPos = zPos + 0.1;
-
-  for (var i = 0; i < scene.getMeshById("object").numberID; i++) {
-    scene.getMeshByName("object").position.z = zPos;
+  for (var i = 0; i < data[currentMesh].Meshes.length; i++) {
+    scene.getMeshByName(data[currentMesh].Meshes[i]).position.z = zPos;
   }
 }
 
 function translateBack() {
   zPos = zPos - 0.1;
-
-  for (var i = 0; i < scene.getMeshById("object").numberID; i++) {
-    scene.getMeshByName("object").position.z = zPos;
+  for (var i = 0; i < data[currentMesh].Meshes.length; i++) {
+    scene.getMeshByName(data[currentMesh].Meshes[i]).position.z = zPos;
   }
 }
 
 function translateYUP() {
   yPos = yPos + 0.1;
-
-  for (var i = 0; i < scene.getMeshById("object").numberID; i++) {
-    scene.getMeshByName("object").position.y = yPos;
+  for (var i = 0; i < data[currentMesh].Meshes.length; i++) {
+    scene.getMeshByName(data[currentMesh].Meshes[i]).position.y = yPos;
   }
 }
 
 function translateYDown() {
   yPos = yPos - 0.1;
-
-  for (var i = 0; i < scene.getMeshById("object").numberID; i++) {
-    scene.getMeshByName("object").position.y = yPos;
+  for (var i = 0; i < data[currentMesh].Meshes.length; i++) {
+    scene.getMeshByName(data[currentMesh].Meshes[i]).position.y = yPos;
   }
 }
 
