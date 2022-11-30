@@ -1,11 +1,3 @@
-const theme3 = `
-
-			`;
-
-let htmlContent3 = "";
-htmlContent3 += theme3;
-document.body.insertAdjacentHTML("beforeend", htmlContent3);
-
 const theme2 = `
   <input type="checkbox" id="ham-menu">
   <label for="ham-menu">
@@ -35,7 +27,6 @@ var ul = document.getElementById("menuList");
 var ov = document.createElement("div");
 ov.classList.add("overlay");
 ov.setAttribute = ("id", "overlayID");
-
 
 var left = document.createElement("button");
 left.textContent = "Move Right";
@@ -81,12 +72,12 @@ yDown.addEventListener("click", translateYDown);
 yDown.innerHTML = "&darr;";
 ov.appendChild(yDown);
 
-var rotMesh = document.createElement("button");
-rotMesh.classList.add("rotateButton");
-rotMesh.setAttribute = ("id", "rotate");
-rotMesh.addEventListener("click", rotateMesh);
-rotMesh.innerHTML = "Rotate 360'";
-ov.appendChild(rotMesh);
+// var rotMesh = document.createElement("button");
+// rotMesh.classList.add("rotateButton");
+// rotMesh.setAttribute = ("id", "rotate");
+// rotMesh.addEventListener("click", rotateMesh);
+// rotMesh.innerHTML = "Rotate 360'";
+// ov.appendChild(rotMesh);
 
 document.body.appendChild(ov);
 
@@ -158,6 +149,27 @@ var createScene = function () {
       }
     }
   }
+
+  //Rendering Title
+
+  var ov2 = document.createElement("div");
+  ov2.classList.add("overlayUp");
+  ov2.setAttribute = ("id", "overlayID");
+
+  const theme3 = `
+<div id = 'introCard' class="card card-1">
+            <h2 id="innerCard" class="card__title">Search the Sprites</h2>
+        </div>
+			`;
+
+  let htmlContent3 = "";
+  htmlContent3 += theme3;
+  ov2.insertAdjacentHTML("beforeend", htmlContent3);
+
+  document.body.appendChild(ov2);
+
+  document.getElementById("innerCard").innerHTML = data[currentMesh].resturant;
+
   //Rendering Model in Scene and Setting up flag variables
   BABYLON.SceneLoader.ImportMesh(
     data[currentMesh].Meshes,
@@ -166,17 +178,22 @@ var createScene = function () {
     scene,
     function (meshes) {
       let xQuat = new BABYLON.Quaternion();
-      BABYLON.Quaternion.FromEulerAnglesToRef(Math.PI / 2, 0, 0, xQuat);
+      BABYLON.Quaternion.FromEulerAnglesToRef(Math.PI / data[currentMesh].rotX, data[currentMesh].rotY, data[currentMesh].rotZ, xQuat);
       for (mesh of meshes) {
         if (mesh.name !== "__root__") {
           mesh.setParent(webarStage);
-          //mesh.position.set(0,0,0);
+          mesh.position.z = data[currentMesh].posZ;
+          mesh.position.y = data[currentMesh].posY;
           mesh.rotationQuaternion.multiplyInPlace(xQuat);
           scaleByFactor(mesh, 0.375);
         }
       }
     }
   );
+
+  xPos = data[currentMesh].posX;
+  yPos = data[currentMesh].posY;
+  zPos = data[currentMesh].posZ;
 
   //==============================================Buttons to Switch Model=====================================
 
@@ -218,40 +235,20 @@ window.initFunction = async function () {
 };
 
 function renderSelectedModel(val) {
-  xPos = 0;
-  yPos = 0;
-  zPos = 0;
+  // for (var i = 0; i < data[currentMesh].Meshes.length; i++) {
+  //   scene.getMeshByName(data[currentMesh].Meshes[i]).dispose();
+  // }
 
-  xRot = 0;
-  yRot = 0;
-  zRot = 0;
-
-  for (var i = 0; i < data[currentMesh].Meshes.length; i++) {
-    //scene.removeMesh( mesh name );
-    scene.getMeshByName(data[currentMesh].Meshes[i]).dispose();
+  //Selected Resturant and Meal
+  const div = document.getElementById("test-div");
+  div.dataset.test = "";
+  div.dataset.test = data[val].Name + "+" + data[val].resturant;
+  if(div.dataset.test != null){
+    var script = document.createElement("script");
+    script.src = './ChangeModel.js';
+    script.setAttribute("type","module");
+    document.body.appendChild(script);
   }
-
-  currentMesh = val;
-  BABYLON.SceneLoader.ImportMesh(
-    data[val].Meshes,
-    data[val].path,
-    data[val].object,
-    scene,
-    function (meshes) {
-      let xQuat = new BABYLON.Quaternion();
-      BABYLON.Quaternion.FromEulerAnglesToRef(Math.PI / data[val].rotX, data[val].rotY, data[val].rotZ, xQuat);
-
-      for (mesh of meshes) {
-        if (mesh.name !== "__root__") {
-          mesh.setParent(webarStage);
-          mesh.rotationQuaternion.multiplyInPlace(xQuat);
-          mesh.position.z = data[val].posZ;
-          mesh.position.y = data[val].posY;
-          scaleByFactor(mesh, 0.0375);
-        }
-      }
-    }
-  );
 }
 
 function translateRight() {

@@ -3,6 +3,7 @@ import {
   getDatabase,
   ref,
   onValue,
+  set
 } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-database.js";
 
 const div = document.getElementById("test-div");
@@ -32,7 +33,4 @@ onValue(starCountRef, (snapshot) => {
   }
 });
 
-// const reference = ref(db, "selected/");
-// set(reference, {
-//   Selected: "",
-// });
+

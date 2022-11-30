@@ -10,13 +10,14 @@ var data = {
         "ModelName": "burger",
         "Meshes":["mainMeshNode_Material_0_0"],
         "scale" : "0.5",
-        "rotX" : "-0.3",
-        "rotY" : "-0.1",
+        
+        "rotX" : "2",
+        "rotY" : "-0.5",
         "rotZ" : "0",
         
         "posX" : "0",
-        "posY" : "0.1",
-        "posZ" : "1",
+        "posY" : "-1.5",
+        "posZ" : "-1.5",
 
         "resturant": "BORO Market | Resturant | Bar",
         "price": "7.99",
@@ -35,13 +36,13 @@ var data = {
         "Meshes":["Object_2", "Object_3", "Object_4"],
         "scale" : "1",
        
-        "rotX" : "1.5",
+        "rotX" : "2",
         "rotY" : "0",
         "rotZ" : "0",
 
         "posX" : "0",
-        "posY" : "0.1",
-        "posZ" : "1",
+        "posY" : "-0.5",
+        "posZ" : "-0.5",
 
         "resturant": "BORO Market | Resturant | Bar",
         "price": "7.99",
@@ -61,13 +62,14 @@ var data = {
         "ModelName": "burger",
         "Meshes":["mainMeshNode_Material_0_0"],
         "scale" : "0.5",
-        "rotX" : "-0.3",
-        "rotY" : "-0.1",
-        "rotZ" : "0",
         
+        "rotX" : "2",
+        "rotY" : "-0.5",
+        "rotZ" : "0",
+      
         "posX" : "0",
-        "posY" : "0.1",
-        "posZ" : "1",
+        "posY" : "-1",
+        "posZ" : "-3",
 
         "resturant": "Por Do Sol ",
         "price": "10",
@@ -86,7 +88,7 @@ var data = {
         "Meshes":["Object_2", "Object_3", "Object_4"],
         "scale" : "1",
        
-        "rotX" : "1.5",
+        "rotX" : "2",
         "rotY" : "0",
         "rotZ" : "0",
 
@@ -111,13 +113,14 @@ var data = {
         "ModelName": "burger",
         "Meshes":["mainMeshNode_Material_0_0"],
         "scale" : "0.5",
-        "rotX" : "-0.3",
-        "rotY" : "-0.1",
+
+        "rotX" : "2",
+        "rotY" : "-0.5",
         "rotZ" : "0",
-        
+     
         "posX" : "0",
-        "posY" : "0.1",
-        "posZ" : "1",
+        "posY" : "-1",
+        "posZ" : "-3",
 
         "resturant": "El Vez",
         "price": "10",
@@ -135,7 +138,7 @@ var data = {
         "Meshes":["Object_2", "Object_3", "Object_4"],
         "scale" : "1",
 
-        "rotX" : "1.5",
+        "rotX" : "2",
         "rotY" : "0",
         "rotZ" : "0",
 
