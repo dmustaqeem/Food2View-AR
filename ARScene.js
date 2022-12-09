@@ -37,6 +37,15 @@ left.innerHTML = "&rarr;";
 //left.innerHTML = "Right";
 ov.appendChild(left);
 
+
+var rotMesh = document.createElement("button");
+rotMesh.classList.add("rotateButton");
+rotMesh.setAttribute = ("id", "rotate");
+rotMesh.addEventListener("click", rotateMesh);
+rotMesh.innerHTML = "Rotate 360'";
+ov.appendChild(rotMesh);
+
+
 var right = document.createElement("button");
 right.classList.add("translationRightButton");
 right.setAttribute = ("id", "but2");
@@ -72,12 +81,6 @@ yDown.addEventListener("click", translateYDown);
 yDown.innerHTML = "&darr;";
 ov.appendChild(yDown);
 
-var rotMesh = document.createElement("button");
-rotMesh.classList.add("rotateButton");
-rotMesh.setAttribute = ("id", "rotate");
-rotMesh.addEventListener("click", rotateMesh);
-rotMesh.innerHTML = "Rotate 360'";
-ov.appendChild(rotMesh);
 
 document.body.appendChild(ov);
 
