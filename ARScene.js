@@ -72,12 +72,12 @@ yDown.addEventListener("click", translateYDown);
 yDown.innerHTML = "&darr;";
 ov.appendChild(yDown);
 
-// var rotMesh = document.createElement("button");
-// rotMesh.classList.add("rotateButton");
-// rotMesh.setAttribute = ("id", "rotate");
-// rotMesh.addEventListener("click", rotateMesh);
-// rotMesh.innerHTML = "Rotate 360'";
-// ov.appendChild(rotMesh);
+var rotMesh = document.createElement("button");
+rotMesh.classList.add("rotateButton");
+rotMesh.setAttribute = ("id", "rotate");
+rotMesh.addEventListener("click", rotateMesh);
+rotMesh.innerHTML = "Rotate 360'";
+ov.appendChild(rotMesh);
 
 document.body.appendChild(ov);
 
@@ -252,52 +252,52 @@ function renderSelectedModel(val) {
 }
 
 function translateRight() {
-  xPos = xPos - 0.1;
+  xPos = xPos - 0.5;
   for (var i = 0; i < data[currentMesh].Meshes.length; i++) {
     scene.getMeshByName(data[currentMesh].Meshes[i]).position.x = xPos;
   }
 }
 
 function translateLeft() {
-  xPos = xPos + 0.1;
+  xPos = xPos + 0.5;
   for (var i = 0; i < data[currentMesh].Meshes.length; i++) {
     scene.getMeshByName(data[currentMesh].Meshes[i]).position.x = xPos;
   }
 }
 
 function translateFront() {
-  zPos = zPos + 0.1;
+  zPos = zPos + 0.5;
   for (var i = 0; i < data[currentMesh].Meshes.length; i++) {
     scene.getMeshByName(data[currentMesh].Meshes[i]).position.z = zPos;
   }
 }
 
 function translateBack() {
-  zPos = zPos - 0.1;
+  zPos = zPos - 0.5;
   for (var i = 0; i < data[currentMesh].Meshes.length; i++) {
     scene.getMeshByName(data[currentMesh].Meshes[i]).position.z = zPos;
   }
 }
 
 function translateYUP() {
-  yPos = yPos + 0.1;
+  yPos = yPos + 0.5;
   for (var i = 0; i < data[currentMesh].Meshes.length; i++) {
     scene.getMeshByName(data[currentMesh].Meshes[i]).position.y = yPos;
   }
 }
 
 function translateYDown() {
-  yPos = yPos - 0.1;
+  yPos = yPos - 0.5;
   for (var i = 0; i < data[currentMesh].Meshes.length; i++) {
     scene.getMeshByName(data[currentMesh].Meshes[i]).position.y = yPos;
   }
 }
 
 function rotateMesh() {
-  xRot = xRot + 0.1;
+  xRot = xRot + 0.05;
   for (var i = 0; i < data[currentMesh].Meshes.length; i++) {
-    console.log(scene.getMeshByName(data[currentMesh].Meshes[i]));
-    scene.getMeshByName(data[currentMesh].Meshes[i]).rotation.x = xRot;
+    console.log(scene.getMeshByName(data[currentMesh].Meshes[i]).rotation.x);
+    scene.getMeshByName(data[currentMesh].Meshes[i]).addRotation(0, 0, xRot);
   }
 }
 
