@@ -38,12 +38,12 @@ left.innerHTML = "&rarr;";
 ov.appendChild(left);
 
 
-var rotMesh = document.createElement("button");
-rotMesh.classList.add("rotateButton");
-rotMesh.setAttribute = ("id", "rotate");
-rotMesh.addEventListener("click", rotateMesh);
-rotMesh.innerHTML = "Rotate 360'";
-ov.appendChild(rotMesh);
+// var rotMesh = document.createElement("button");
+// rotMesh.classList.add("rotateButton");
+// rotMesh.setAttribute = ("id", "rotate");
+// rotMesh.addEventListener("click", rotateMesh);
+// rotMesh.innerHTML = "Rotate 360'";
+// ov.appendChild(rotMesh);
 
 
 var right = document.createElement("button");
@@ -134,7 +134,9 @@ var createScene = function () {
   light.intensity = 0.7;
 
   webarStage = new BABYLON.Mesh("webarStage", scene);
-
+  canvas.addEventListener("pointerdown", onPointerDown);
+  canvas.addEventListener("pointermove",onPointerMove);
+  canvas.addEventListener("pointerup", onPointerUp);
   //=======================================================
 
   //Selected Resturant and Meal
@@ -246,12 +248,63 @@ function renderSelectedModel(val) {
   const div = document.getElementById("test-div");
   div.dataset.test = "";
   div.dataset.test = data[val].Name + "+" + data[val].resturant;
-  if(div.dataset.test != null){
+  if (div.dataset.test != null) {
     var script = document.createElement("script");
     script.src = './ChangeModel.js';
-    script.setAttribute("type","module");
+    script.setAttribute("type", "module");
     document.body.appendChild(script);
   }
+}
+
+
+var currentPosition = { x: 0, y: 0 };
+var clicked = false;
+var onPointerDown = function (evt) {
+  currentPosition.x = evt.clientX;
+  currentPosition.y = evt.clientY;
+  clicked = true;
+};
+
+var onPointerMove = function (evt) {
+
+  if (!clicked) {
+    return;
+  }
+
+  var dx = evt.clientX - currentPosition.x;
+  var dy = evt.clientY - currentPosition.y;
+
+  var angleX = dy * 0.001;
+  var angleY = dx * 0.0001;
+
+  if(angleY > 0){
+    for (var i = 0; i < data[currentMesh].Meshes.length; i++) {
+      //   scene.getMeshByName(data[currentMesh].Meshes[i]).rotationQuaternion.x -= angleX;
+      // scene.getMeshByName(data[currentMesh].Meshes[i]).rotationQuaternion.y -= angleY;
+      scene.getMeshByName(data[currentMesh].Meshes[i]).addRotation(0, 0, xRot + 0.1);
+      }
+  }
+
+  if(angleY < 0){
+    for (var i = 0; i < data[currentMesh].Meshes.length; i++) {
+      //   scene.getMeshByName(data[currentMesh].Meshes[i]).rotationQuaternion.x -= angleX;
+      // scene.getMeshByName(data[currentMesh].Meshes[i]).rotationQuaternion.y -= angleY;
+      scene.getMeshByName(data[currentMesh].Meshes[i]).addRotation(0, 0, xRot - 0.1);
+      }
+    }
+  
+
+  for (var i = 0; i < data[currentMesh].Meshes.length; i++) {
+  //   scene.getMeshByName(data[currentMesh].Meshes[i]).rotationQuaternion.x -= angleX;
+  // scene.getMeshByName(data[currentMesh].Meshes[i]).rotationQuaternion.y -= angleY;
+  scene.getMeshByName(data[currentMesh].Meshes[i]).addRotation(0, 0, xRot);
+  }
+  currentPosition.x = evt.clientX;
+  currentPosition.y = evt.clientY;
+};
+
+var onPointerUp = function(evt){
+  clicked = false;
 }
 
 function translateRight() {
