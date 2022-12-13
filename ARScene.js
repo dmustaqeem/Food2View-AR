@@ -139,7 +139,7 @@ var createScene = function () {
 
   webarStage = new BABYLON.Mesh("webarStage", scene);
   canvas.addEventListener("pointerdown", onPointerDown);
-  canvas.addEventListener("pointermove",onPointerMove);
+  canvas.addEventListener("pointermove", onPointerMove);
   canvas.addEventListener("pointerup", onPointerUp);
   //=======================================================
 
@@ -243,11 +243,12 @@ window.initFunction = async function () {
 };
 
 function renderSelectedModel(ModelName) {
-  var win = window.open(
-    'https://ar.food2view.com/ '+ '?Model=' +  ModelName + '/' + data[currentMesh].resturant,
-    '_blank'
-   )
-   win.focus()
+  // var win = window.open(
+  //   'https://ar.food2view.com/ '+ '?Model=' +  ModelName + '/' + data[currentMesh].resturant,
+  //   '_blank'
+  //  )
+  //  win.focus()
+  window.open('https://ar.food2view.com/ '+ '?Model=' +  ModelName + '/' + data[currentMesh].resturant, "_self");
 }
 
 
@@ -271,31 +272,31 @@ var onPointerMove = function (evt) {
   var angleX = dy * 0.001;
   var angleY = dx * 0.0001;
 
-  if(angleY < 0){
+  if (angleY < 0) {
     for (var i = 0; i < data[currentMesh].Meshes.length; i++) {
       scene.getMeshByName(data[currentMesh].Meshes[i]).addRotation(0, 0, xRot + 0.1);
-      }
+    }
   }
 
-  if(angleY > 0){
+  if (angleY > 0) {
     for (var i = 0; i < data[currentMesh].Meshes.length; i++) {
       //   scene.getMeshByName(data[currentMesh].Meshes[i]).rotationQuaternion.x -= angleX;
       // scene.getMeshByName(data[currentMesh].Meshes[i]).rotationQuaternion.y -= angleY;
       scene.getMeshByName(data[currentMesh].Meshes[i]).addRotation(0, 0, xRot - 0.1);
-      }
     }
-  
+  }
+
 
   for (var i = 0; i < data[currentMesh].Meshes.length; i++) {
-  //   scene.getMeshByName(data[currentMesh].Meshes[i]).rotationQuaternion.x -= angleX;
-  // scene.getMeshByName(data[currentMesh].Meshes[i]).rotationQuaternion.y -= angleY;
-  scene.getMeshByName(data[currentMesh].Meshes[i]).addRotation(0, 0, xRot);
+    //   scene.getMeshByName(data[currentMesh].Meshes[i]).rotationQuaternion.x -= angleX;
+    // scene.getMeshByName(data[currentMesh].Meshes[i]).rotationQuaternion.y -= angleY;
+    scene.getMeshByName(data[currentMesh].Meshes[i]).addRotation(0, 0, xRot);
   }
   currentPosition.x = evt.clientX;
   currentPosition.y = evt.clientY;
 };
 
-var onPointerUp = function(evt){
+var onPointerUp = function (evt) {
   clicked = false;
 }
 
@@ -304,7 +305,7 @@ function translateRight() {
   for (var i = 0; i < data[currentMesh].Meshes.length; i++) {
     scene.getMeshByName(data[currentMesh].Meshes[i]).position.x = xPos;
   }
-  if(left.onmousedown == true){
+  if (left.onmousedown == true) {
     translateRight();
   }
 }
