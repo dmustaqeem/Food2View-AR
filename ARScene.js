@@ -1,9 +1,7 @@
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const id = urlParams.get('id');
-
-
-console.log(window.id)
+console.log(id)
 const theme2 = `
   <input type="checkbox" id="ham-menu">
   <label for="ham-menu">
