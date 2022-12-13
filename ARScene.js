@@ -242,21 +242,12 @@ window.initFunction = async function () {
   window.scene = createScene();
 };
 
-function renderSelectedModel(val) {
-  // for (var i = 0; i < data[currentMesh].Meshes.length; i++) {
-  //   scene.getMeshByName(data[currentMesh].Meshes[i]).dispose();
-  // }
-
-  //Selected Resturant and Meal
-  const div = document.getElementById("test-div");
-  div.dataset.test = "";
-  div.dataset.test = data[val].Name + "+" + data[val].resturant;
-  if (div.dataset.test != null) {
-    var script = document.createElement("script");
-    script.src = './ChangeModel.js';
-    script.setAttribute("type", "module");
-    document.body.appendChild(script);
-  }
+function renderSelectedModel(ModelName) {
+  var win = window.open(
+    'https://ar.food2view.com/ '+ '?Model=' +  ModelName + '/' + data[currentMesh].resturant,
+    '_blank'
+   )
+   win.focus()
 }
 
 
