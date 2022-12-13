@@ -1,3 +1,4 @@
+console.log("Hey here we are")
 console.log(window.id)
 const theme2 = `
   <input type="checkbox" id="ham-menu">
