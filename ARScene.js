@@ -277,15 +277,13 @@ var onPointerMove = function (evt) {
   var angleX = dy * 0.001;
   var angleY = dx * 0.0001;
 
-  if(angleY > 0){
+  if(angleY < 0){
     for (var i = 0; i < data[currentMesh].Meshes.length; i++) {
-      //   scene.getMeshByName(data[currentMesh].Meshes[i]).rotationQuaternion.x -= angleX;
-      // scene.getMeshByName(data[currentMesh].Meshes[i]).rotationQuaternion.y -= angleY;
       scene.getMeshByName(data[currentMesh].Meshes[i]).addRotation(0, 0, xRot + 0.1);
       }
   }
 
-  if(angleY < 0){
+  if(angleY > 0){
     for (var i = 0; i < data[currentMesh].Meshes.length; i++) {
       //   scene.getMeshByName(data[currentMesh].Meshes[i]).rotationQuaternion.x -= angleX;
       // scene.getMeshByName(data[currentMesh].Meshes[i]).rotationQuaternion.y -= angleY;
@@ -311,6 +309,9 @@ function translateRight() {
   xPos = xPos - 0.5;
   for (var i = 0; i < data[currentMesh].Meshes.length; i++) {
     scene.getMeshByName(data[currentMesh].Meshes[i]).position.x = xPos;
+  }
+  if(left.onmousedown == true){
+    translateRight();
   }
 }
 
@@ -350,7 +351,7 @@ function translateYDown() {
 }
 
 function rotateMesh() {
-  xRot = xRot + 0.05;
+  xRot = xRot + 0.5;
   for (var i = 0; i < data[currentMesh].Meshes.length; i++) {
     console.log(scene.getMeshByName(data[currentMesh].Meshes[i]).rotation.x);
     scene.getMeshByName(data[currentMesh].Meshes[i]).addRotation(0, 0, xRot);
