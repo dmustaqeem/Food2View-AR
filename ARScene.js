@@ -1,7 +1,7 @@
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
-const id = urlParams.get('Model');
-console.log(id)
+
+
 const theme2 = `
   <input type="checkbox" id="ham-menu">
   <label for="ham-menu">
@@ -143,10 +143,9 @@ var createScene = function () {
   canvas.addEventListener("pointerup", onPointerUp);
   //=======================================================
 
-  //Selected Resturant and Meal
-  const div = document.getElementById("test-div");
-  //Spliting the String to get Meal and Resturant
-  const myArray = div.dataset.test.split("+");
+  //==========Getting from Domain
+  const id = urlParams.get('Model');
+  const myArray = id.split("/");
 
   //To Compare with coresponding Model in JSON
   for (var key of Object.keys(data)) {
