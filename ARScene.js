@@ -36,24 +36,15 @@ var left = document.createElement("button");
 left.textContent = "Move Right";
 left.classList.add("translationLeftButton");
 left.setAttribute = ("id", "but");
-left.addEventListener("click", translateRight);
+left.addEventListener("click", translateLeft);
 left.innerHTML = "&rarr;";
 //left.innerHTML = "Right";
 ov.appendChild(left);
 
-
-// var rotMesh = document.createElement("button");
-// rotMesh.classList.add("rotateButton");
-// rotMesh.setAttribute = ("id", "rotate");
-// rotMesh.addEventListener("click", rotateMesh);
-// rotMesh.innerHTML = "Rotate 360'";
-// ov.appendChild(rotMesh);
-
-
 var right = document.createElement("button");
 right.classList.add("translationRightButton");
 right.setAttribute = ("id", "but2");
-right.addEventListener("click", translateLeft);
+right.addEventListener("click", translateRight);
 right.innerHTML = "&larr;";
 ov.appendChild(right);
 
@@ -146,6 +137,7 @@ var createScene = function () {
   //==========Getting from Domain
   const id = urlParams.get('Model');
   const myArray = id.split("/");
+  //const myArray = ['Meal 1','BORO Market | Resturant | Bar']
 
   //To Compare with coresponding Model in JSON
   for (var key of Object.keys(data)) {
@@ -301,52 +293,49 @@ var onPointerUp = function (evt) {
 }
 
 function translateRight() {
-  xPos = xPos - 0.5;
+  xPos = xPos + 0.1;
   for (var i = 0; i < data[currentMesh].Meshes.length; i++) {
     scene.getMeshByName(data[currentMesh].Meshes[i]).position.x = xPos;
-  }
-  if (left.onmousedown == true) {
-    translateRight();
   }
 }
 
 function translateLeft() {
-  xPos = xPos + 0.5;
+  xPos = xPos - 0.1;
   for (var i = 0; i < data[currentMesh].Meshes.length; i++) {
     scene.getMeshByName(data[currentMesh].Meshes[i]).position.x = xPos;
   }
 }
 
 function translateFront() {
-  zPos = zPos + 0.5;
+  zPos = zPos + 0.1;
   for (var i = 0; i < data[currentMesh].Meshes.length; i++) {
     scene.getMeshByName(data[currentMesh].Meshes[i]).position.z = zPos;
   }
 }
 
 function translateBack() {
-  zPos = zPos - 0.5;
+  zPos = zPos - 0.1;
   for (var i = 0; i < data[currentMesh].Meshes.length; i++) {
     scene.getMeshByName(data[currentMesh].Meshes[i]).position.z = zPos;
   }
 }
 
 function translateYUP() {
-  yPos = yPos + 0.5;
+  yPos = yPos + 0.1;
   for (var i = 0; i < data[currentMesh].Meshes.length; i++) {
     scene.getMeshByName(data[currentMesh].Meshes[i]).position.y = yPos;
   }
 }
 
 function translateYDown() {
-  yPos = yPos - 0.5;
+  yPos = yPos - 0.1;
   for (var i = 0; i < data[currentMesh].Meshes.length; i++) {
     scene.getMeshByName(data[currentMesh].Meshes[i]).position.y = yPos;
   }
 }
 
 function rotateMesh() {
-  xRot = xRot + 0.5;
+  xRot = xRot + 0.1;
   for (var i = 0; i < data[currentMesh].Meshes.length; i++) {
     console.log(scene.getMeshByName(data[currentMesh].Meshes[i]).rotation.x);
     scene.getMeshByName(data[currentMesh].Meshes[i]).addRotation(0, 0, xRot);
