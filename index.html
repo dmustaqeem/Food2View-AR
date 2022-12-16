@@ -69,9 +69,9 @@
         touch-action: none;
       }
       .translationLeftButton {
-        top: 60px;
+        top: 50%;
         right: 25px;
-        width: 70px;
+        width: 100px;
         height: auto;
         position: absolute;
         color: white;
@@ -80,9 +80,9 @@
         background-color: #0f37588c;
       }
       .translationRightButton {
-        top: 60px;
-        right: 100px;
-        width: 70px;
+        top: 50%;
+        left: 25px;
+        width: 100px;
         height: auto;
         position: absolute;
         color: white;
@@ -91,9 +91,9 @@
         background-color: #0f37588c;
       }
       .translationYUP {
-        top: 40px;
-        right: 190px;
-        width: 50px;
+        top: 25px;
+        right: 40%;
+        width: 100px;
         height: auto;
         position: absolute;
         color: white;
@@ -102,9 +102,9 @@
         background-color: #0f37588c;
       }
       .translationYDown {
-        top: 90px;
-        right: 190px;
-        width: 50px;
+        bottom: 20%;
+        right: 40%;
+        width: 100px;
         height: auto;
         position: absolute;
         color: white;
@@ -114,8 +114,8 @@
       }
 
       .translationFrontButton {
-        top: 60px;
-        right: 260px;
+        top: 40px;
+        right: 25px;
         width: 100px;
         height: auto;
         position: absolute;
@@ -123,11 +123,12 @@
         font-size: 20px;
         border-radius: 6px;
         background-color: #0f37588c;
+        padding: 0.5rem;
       }
 
       .translationBackButton {
         top: 90px;
-        right: 260px;
+        right: 25px;
         width: 100px;
         height: auto;
         position: absolute;
@@ -135,6 +136,7 @@
         font-size: 20px;
         border-radius: 6px;
         background-color: #0f37588c;
+        padding: 0.5rem;
       }
 
       .rotateButton {
@@ -404,12 +406,11 @@
 
       .card {
         position: absolute;
-        right: 0px;
+        left: 0px;
         margin: 20px;
-        padding: 20px;
         width: 50%;
         place-content: center;
-        min-height: 150px;
+        min-height: 10px;
         display: grid;
         grid-template-rows: 20px 50px 1fr 50px;
         border-radius: 10px;
@@ -477,7 +478,7 @@
       /* CARD BACKGROUNDS */
 
       .card-1 {
-        background: radial-gradient(#0f37588c, #184a748c);
+        background: radial-gradient(#12171b8c, #1414148c);
       }
 
       /* RESPONSIVE */

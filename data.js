@@ -19,7 +19,7 @@ var data = {
         "posY" : "-1.5",
         "posZ" : "-1.5",
 
-        "resturant": "BORO Market | Resturant | Bar",
+        "resturant": "Por Do Sol",
         "price": "7.99",
         "Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sit amet tincidunt lorem. Ut leo risus, pretium quis ligula nec, aliquam laoreet quam. Quisque semper ipsum diam, sit amet bibendum tellus bibendum et. Quisque vulputate commodo ex in pellentesque. Nunc et porta orci, sit amet gravida nunc. Suspendisse potenti. Nulla et erat sed ipsum dignissim blandit. Praesent eu ex consectetur, congue erat at, ornare ex."
     },
@@ -44,7 +44,7 @@ var data = {
         "posY" : "-0.5",
         "posZ" : "-0.5",
 
-        "resturant": "BORO Market | Resturant | Bar",
+        "resturant": "Por Do Sol",
         "price": "7.99",
         "Description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sit amet tincidunt lorem. Ut leo risus, pretium quis ligula nec, aliquam laoreet quam. Quisque semper ipsum diam, sit amet bibendum tellus bibendum et. Quisque vulputate commodo ex in pellentesque. Nunc et porta orci, sit amet gravida nunc. Suspendisse potenti. Nulla et erat sed ipsum dignissim blandit. Praesent eu ex consectetur, congue erat at, ornare ex."
     },

@@ -38,15 +38,14 @@ left.classList.add("translationLeftButton");
 left.setAttribute = ("id", "but");
 left.addEventListener("click", translateLeft);
 left.innerHTML = "&rarr;";
-//left.innerHTML = "Right";
-ov.appendChild(left);
+document.body.appendChild(left);
 
 var right = document.createElement("button");
 right.classList.add("translationRightButton");
 right.setAttribute = ("id", "but2");
 right.addEventListener("click", translateRight);
 right.innerHTML = "&larr;";
-ov.appendChild(right);
+document.body.appendChild(right);
 
 var zFront = document.createElement("button");
 zFront.classList.add("translationFrontButton");
@@ -67,14 +66,14 @@ yUp.classList.add("translationYUP");
 yUp.setAttribute = ("id", "yUP");
 yUp.addEventListener("click", translateYUP);
 yUp.innerHTML = "&uarr;";
-ov.appendChild(yUp);
+document.body.appendChild(yUp);
 
 var yDown = document.createElement("button");
 yDown.classList.add("translationYDown");
 yDown.setAttribute = ("id", "yDown");
 yDown.addEventListener("click", translateYDown);
 yDown.innerHTML = "&darr;";
-ov.appendChild(yDown);
+document.body.appendChild(yDown);
 
 
 document.body.appendChild(ov);
@@ -137,7 +136,7 @@ var createScene = function () {
   //==========Getting from Domain
   const id = urlParams.get('Model');
   const myArray = id.split("/");
-  //const myArray = ['Meal 1','BORO Market | Resturant | Bar']
+  //const myArray = ['Meal 1', 'Por Do Sol']
 
   //To Compare with coresponding Model in JSON
   for (var key of Object.keys(data)) {
@@ -151,22 +150,16 @@ var createScene = function () {
   }
 
   //Rendering Title
-
-  var ov2 = document.createElement("div");
-  ov2.classList.add("overlayUp");
-  ov2.setAttribute = ("id", "overlayID");
-
   const theme3 = `
-<div id = 'introCard' class="card card-1">
+        <div id = 'introCard' class="card card-1">
             <h2 id="innerCard" class="card__title">Search the Sprites</h2>
         </div>
 			`;
 
   let htmlContent3 = "";
   htmlContent3 += theme3;
-  ov2.insertAdjacentHTML("beforeend", htmlContent3);
+  ov.insertAdjacentHTML("beforeend", htmlContent3);
 
-  document.body.appendChild(ov2);
 
   document.getElementById("innerCard").innerHTML = data[currentMesh].resturant;
 
@@ -202,6 +195,7 @@ var createScene = function () {
     m1.innerHTML = modelsInResturant[i].Name;
     m1.id = modelsInResturant[i].Name;
     ul.appendChild(m1);
+    console.log(modelsInResturant[i].Name)
   }
 
   ul.addEventListener("click", function (e) {
@@ -212,7 +206,6 @@ var createScene = function () {
 
   //=====================================================================================
 
-  //translateRight()
   WEBARSDK.InitBabylonJs(canvas, scene, camera, webarStage);
   return scene;
 };
@@ -235,12 +228,7 @@ window.initFunction = async function () {
 };
 
 function renderSelectedModel(ModelName) {
-  // var win = window.open(
-  //   'https://ar.food2view.com/ '+ '?Model=' +  ModelName + '/' + data[currentMesh].resturant,
-  //   '_blank'
-  //  )
-  //  win.focus()
-  window.open('https://ar.food2view.com/ '+ '?Model=' +  ModelName + '/' + data[currentMesh].resturant, "_self");
+  window.open('https://ar.food2view.com/ ' + '?Model=' + ModelName + '/' + data[currentMesh].resturant, "_self");
 }
 
 
@@ -272,16 +260,12 @@ var onPointerMove = function (evt) {
 
   if (angleY > 0) {
     for (var i = 0; i < data[currentMesh].Meshes.length; i++) {
-      //   scene.getMeshByName(data[currentMesh].Meshes[i]).rotationQuaternion.x -= angleX;
-      // scene.getMeshByName(data[currentMesh].Meshes[i]).rotationQuaternion.y -= angleY;
       scene.getMeshByName(data[currentMesh].Meshes[i]).addRotation(0, 0, xRot - 0.1);
     }
   }
 
 
   for (var i = 0; i < data[currentMesh].Meshes.length; i++) {
-    //   scene.getMeshByName(data[currentMesh].Meshes[i]).rotationQuaternion.x -= angleX;
-    // scene.getMeshByName(data[currentMesh].Meshes[i]).rotationQuaternion.y -= angleY;
     scene.getMeshByName(data[currentMesh].Meshes[i]).addRotation(0, 0, xRot);
   }
   currentPosition.x = evt.clientX;
@@ -293,9 +277,10 @@ var onPointerUp = function (evt) {
 }
 
 function translateRight() {
-  xPos = xPos + 0.1;
+  xPos = xPos - (-0.1);
+  console.log(xPos)
   for (var i = 0; i < data[currentMesh].Meshes.length; i++) {
-    scene.getMeshByName(data[currentMesh].Meshes[i]).position.x = xPos;
+    scene.getMeshByName(data[currentMesh].Meshes[i]).position.x = xPos + 1;
   }
 }
 
@@ -307,7 +292,7 @@ function translateLeft() {
 }
 
 function translateFront() {
-  zPos = zPos + 0.1;
+  zPos = zPos - (-0.1);
   for (var i = 0; i < data[currentMesh].Meshes.length; i++) {
     scene.getMeshByName(data[currentMesh].Meshes[i]).position.z = zPos;
   }
@@ -321,7 +306,7 @@ function translateBack() {
 }
 
 function translateYUP() {
-  yPos = yPos + 0.1;
+  yPos = yPos - (-0.1);
   for (var i = 0; i < data[currentMesh].Meshes.length; i++) {
     scene.getMeshByName(data[currentMesh].Meshes[i]).position.y = yPos;
   }
@@ -331,14 +316,6 @@ function translateYDown() {
   yPos = yPos - 0.1;
   for (var i = 0; i < data[currentMesh].Meshes.length; i++) {
     scene.getMeshByName(data[currentMesh].Meshes[i]).position.y = yPos;
-  }
-}
-
-function rotateMesh() {
-  xRot = xRot + 0.1;
-  for (var i = 0; i < data[currentMesh].Meshes.length; i++) {
-    console.log(scene.getMeshByName(data[currentMesh].Meshes[i]).rotation.x);
-    scene.getMeshByName(data[currentMesh].Meshes[i]).addRotation(0, 0, xRot);
   }
 }
 
