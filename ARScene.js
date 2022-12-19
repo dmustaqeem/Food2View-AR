@@ -136,7 +136,7 @@ var createScene = function () {
   //==========Getting from Domain
   const id = urlParams.get('Model');
   const myArray = id.split("/");
-  //const myArray = ['Meal 1', 'Por Do Sol']
+  //const myArray = ['Salmon Tartine', 'Por Do Sol']
 
   //To Compare with coresponding Model in JSON
   for (var key of Object.keys(data)) {
@@ -178,7 +178,7 @@ var createScene = function () {
           mesh.position.z = data[currentMesh].posZ;
           mesh.position.y = data[currentMesh].posY;
           mesh.rotationQuaternion.multiplyInPlace(xQuat);
-          scaleByFactor(mesh, 0.375);
+          scaleByFactor(mesh, data[currentMesh].scale);
         }
       }
     }
