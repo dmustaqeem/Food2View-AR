@@ -61,7 +61,7 @@ var data = {
         "object": "extra_chocolate_marshmallow_cupcake.glb",
         "ModelName": "Cupcake",
         "Meshes":["Object_2", "Object_3", "Object_4", "Object_5", "Object_6", "Object_7"],
-        "scale" : "1",
+        "scale" : "0.5",
         
         "rotX" : "1",
         "rotY" : "0",
@@ -69,7 +69,7 @@ var data = {
       
         "posX" : "0",
         "posY" : "-2",
-        "posZ" : "0",
+        "posZ" : "-1",
 
         "resturant": "Por Do Sol",
         "price": "10",

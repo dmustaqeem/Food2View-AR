@@ -136,7 +136,7 @@ var createScene = function () {
   //==========Getting from Domain
   const id = urlParams.get('Model');
   const myArray = id.split("/");
-  //const myArray = ['Salmon Tartine', 'Por Do Sol']
+  //const myArray = ['Cupcake', 'Por Do Sol']
 
   //To Compare with coresponding Model in JSON
   for (var key of Object.keys(data)) {
